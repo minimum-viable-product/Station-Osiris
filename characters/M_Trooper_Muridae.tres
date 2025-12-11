@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://ftiajxxitlve"]
+
+[ext_resource type="Texture2D" uid="uid://cauh0b7etewth" path="res://characters/Muridae_Low_Muridae_soldier_low_BaseColor.png" id="1_y1aym"]
+[ext_resource type="Texture2D" uid="uid://bib8ch0084q1i" path="res://characters/Muridae_Low_Muridae_soldier_low_Normal.png" id="2_jllf2"]
+
+[resource]
+albedo_texture = ExtResource("1_y1aym")
+normal_enabled = true
+normal_texture = ExtResource("2_jllf2")

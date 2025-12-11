@@ -1,0 +1,369 @@
+[gd_scene load_steps=26 format=3 uid="uid://cjga2lb4p3tkv"]
+
+[ext_resource type="Texture2D" uid="uid://df34e2s6bqopp" path="res://Textures/qwantani_dusk_2_puresky_4k.hdr" id="1_2io4y"]
+[ext_resource type="Script" uid="uid://omengesu75me" path="res://addons/zylann.hterrain/hterrain.gd" id="1_ytbnm"]
+[ext_resource type="Resource" uid="uid://3qg8m6mxwqpk" path="res://Scenes/data.hterrain" id="2_r3b3i"]
+[ext_resource type="Script" uid="uid://c8ey0ee3yu74o" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_17n1w"]
+[ext_resource type="Texture2D" uid="uid://by05j0vh0ie4n" path="res://Textures/wasteland_a_slot0_albedo_bump.png" id="4_2io4y"]
+[ext_resource type="Texture2D" uid="uid://duc3jtqd2s0f5" path="res://Textures/wasteland_a_slot2_albedo_bump.png" id="6_2qn3q"]
+[ext_resource type="Texture2D" uid="uid://cxhidlyx0smlp" path="res://Textures/Sand.png" id="6_oqafc"]
+[ext_resource type="Texture2D" uid="uid://bqes22e6urgsa" path="res://Textures/wasteland_a_slot0_normal_roughness.png" id="7_lr1ii"]
+[ext_resource type="Texture2D" uid="uid://dehhn4jdttaq4" path="res://Textures/rock_cliff.png" id="8_6mxxq"]
+[ext_resource type="Texture2D" uid="uid://bs3sjesqpve34" path="res://Textures/wasteland_a_slot2_normal_roughness.png" id="9_w0jby"]
+[ext_resource type="PackedScene" uid="uid://cf7brgwaxlmud" path="res://addons/3d_rts_camera/rtscam.tscn" id="11_2qn3q"]
+[ext_resource type="PackedScene" uid="uid://bpk8tgouu5bx5" path="res://characters/Trooper_Muridae_Rig.fbx" id="12_lr1ii"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6mxxq"]
+panorama = ExtResource("1_2io4y")
+energy_multiplier = 0.1
+
+[sub_resource type="Sky" id="Sky_2qn3q"]
+sky_material = SubResource("PanoramaSkyMaterial_6mxxq")
+
+[sub_resource type="Environment" id="Environment_le887"]
+background_mode = 2
+background_energy_multiplier = 1.24
+sky = SubResource("Sky_2qn3q")
+ambient_light_color = Color(0.0077156243, 0.008479, 0.0075955633, 1)
+ambient_light_sky_contribution = 0.5
+tonemap_mode = 1
+tonemap_exposure = 1.29
+tonemap_white = 1.06
+ssao_enabled = true
+ssao_radius = 4.61
+ssao_intensity = 2.37
+ssao_detail = 1.0
+ssao_sharpness = 1.0
+ssao_light_affect = 1.0
+ssao_ao_channel_affect = 1.0
+ssil_enabled = true
+ssil_radius = 10.0
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_cascades = 6
+sdfgi_min_cell_size = 0.6850464
+fog_enabled = true
+fog_light_color = Color(0.15606862, 0.17037743, 0.15736619, 1)
+fog_sun_scatter = 0.13
+fog_density = 0.0065
+fog_sky_affect = 0.234
+fog_height = 422.11
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.007
+volumetric_fog_albedo = Color(0.42261255, 0.22439408, 0.44743776, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_gi_inject = 1.11
+volumetric_fog_length = 40.55
+volumetric_fog_detail_spread = 4.8735156
+volumetric_fog_ambient_inject = 0.56
+volumetric_fog_sky_affect = 0.26
+adjustment_enabled = true
+adjustment_contrast = 1.3
+adjustment_saturation = 1.18
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_i45ad"]
+
+[sub_resource type="Resource" id="Resource_oqafc"]
+script = ExtResource("3_17n1w")
+mode = 0
+textures = [[ExtResource("4_2io4y"), ExtResource("6_2qn3q"), ExtResource("6_oqafc"), ExtResource("8_6mxxq")], [ExtResource("7_lr1ii"), ExtResource("9_w0jby"), null, null]]
+
+[sub_resource type="Gradient" id="Gradient_6mxxq"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2qn3q"]
+frequency = 0.0995
+fractal_lacunarity = 2.33
+fractal_gain = -0.54
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_lr1ii"]
+noise = SubResource("FastNoiseLite_2qn3q")
+color_ramp = SubResource("Gradient_6mxxq")
+invert = true
+
+[sub_resource type="FogMaterial" id="FogMaterial_saaf7"]
+density = 0.103
+albedo = Color(0.43084228, 0.27314472, 0.47493213, 1)
+emission = Color(0.48114258, 0.5063458, 0.52015716, 1)
+height_falloff = 0.49666598
+edge_fade = 0.324901
+density_texture = SubResource("NoiseTexture3D_lr1ii")
+
+[sub_resource type="Animation" id="Animation_eicgn"]
+length = 10.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:density_texture:noise:frequency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.0995, -0.25, 0, 0.25, 0, 0.0995, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 9.949494)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:density_texture:noise:fractal_lacunarity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(2.33, -0.25, 0, 0.25, 0, 2.33, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 9.949494)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:density_texture:noise:fractal_gain")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-0.54, -0.25, 0, 0.25, 0, -0.54, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 9.949494)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:material:edge_fade")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:position:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:position:z")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+
+[sub_resource type="Animation" id="Animation_w0jby"]
+resource_name = "fog movement"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:density_texture:noise:frequency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.0995, -0.25, 0, 0.25, 0, 0.0185, -0.16666667, 0.0135, 0, 0),
+"times": PackedFloat32Array(0, 9.938468)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:density_texture:noise:fractal_lacunarity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(0.205, 0, 0, 0.16666667, 0.3541667, 2.33, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 9.938468)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:density_texture:noise:fractal_gain")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-0.54, -0.25, 0, 0.25, 0, -0.54, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 9.938468)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:material:edge_fade")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.324901, -0.25, 0, 0.25, 0, 0.324901, -0.07833333, 0, 0, 0, 0.1802501, -0.08833333, 0.024108486, 0, 0),
+"times": PackedFloat32Array(-0.06666667, 4.8333335, 9.938468)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:position:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:position:z")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ggrk6"]
+_data = {
+&"RESET": SubResource("Animation_eicgn"),
+&"fog movement": SubResource("Animation_w0jby")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2qn3q"]
+
+[node name="Wasteland_A" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8817868, -0.22734551, -0.4132386, 0, -0.8761583, 0.48202354, 0.47164813, 0.42504197, 0.7725848, 4.515355, 28.886288, 3.9310834)
+light_color = Color(0.87379605, 0.8008507, 0.7943086, 1)
+light_energy = 1.602
+light_indirect_energy = 3.586
+light_volumetric_fog_energy = 2.072
+light_bake_mode = 1
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_blur = 1.201
+directional_shadow_split_1 = 0.137
+directional_shadow_split_2 = 0.437
+directional_shadow_split_3 = 1.0
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 0.835
+directional_shadow_max_distance = 165.4
+directional_shadow_pancake_size = 27.4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_le887")
+camera_attributes = SubResource("CameraAttributesPractical_i45ad")
+
+[node name="HTerrain" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -278.7118, -57.533073, -86.250046)
+script = ExtResource("1_ytbnm")
+_terrain_data = ExtResource("2_r3b3i")
+chunk_size = 64
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_oqafc")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20.0
+shader_params/u_depth_blending = false
+shader_params/u_triplanar = true
+shader_params/u_tile_reduction = Vector4(2, 2, 2, 2)
+metadata/_custom_type_script = "uid://omengesu75me"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -365.43915, -70.561905, -151.04353)
+light_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
+light_energy = 0.777
+light_indirect_energy = 4.437
+light_volumetric_fog_energy = 2.541
+light_negative = true
+light_bake_mode = 1
+shadow_enabled = true
+shadow_blur = 4.333
+omni_range = 64.339
+omni_attenuation = 0.185
+omni_shadow_mode = 0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.1904, -70.561905, -151.04353)
+light_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
+light_energy = 0.777
+light_indirect_energy = 4.437
+light_volumetric_fog_energy = 2.541
+light_negative = true
+light_bake_mode = 1
+shadow_enabled = true
+shadow_blur = 4.333
+omni_range = 134.764
+omni_attenuation = 0.185
+omni_shadow_mode = 0
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.05222, -55.10443, 99.27722)
+size = Vector3(76.6, 28.570667, 32.16)
+shape = 0
+material = SubResource("FogMaterial_saaf7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FogVolume"]
+libraries = {
+&"": SubResource("AnimationLibrary_ggrk6")
+}
+
+[node name="FogVolume2" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.406525, -51.199806, 99.21014)
+size = Vector3(80.475784, 28.570667, 52.277447)
+material = SubResource("FogMaterial_saaf7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FogVolume2"]
+libraries = {
+&"": SubResource("AnimationLibrary_ggrk6")
+}
+
+[node name="RTScamera" parent="." instance=ExtResource("11_2qn3q")]
+transform = Transform3D(-0.9914279, 0.0062168445, 0.1305068, 0.101202875, 0.66829735, 0.736978, -0.08263568, 0.7438682, -0.66319793, 166.61316, -13.518453, -70.22494)
+current = true
+fov = 47.238827
+far = 80000.0
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(3.665, 0, 0, 0, 3.665, 0, 0, 0, 3.665, 156.24242, -47.665478, -34.61765)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1.315, 0, 0, 0, 1.315, 0, 0, 0, 1.315, 0, -0.6171907, 0)
+shape = SubResource("CapsuleShape3D_2qn3q")
+
+[node name="Trooper_Muridae_Rig" parent="CharacterBody3D" instance=ExtResource("12_lr1ii")]
+transform = Transform3D(10.2, 0, 0, 0, 10.2, 0, 0, 0, 10.2, 0, -1.9569355, 0)
